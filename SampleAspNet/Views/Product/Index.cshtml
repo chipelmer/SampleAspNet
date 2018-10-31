@@ -1,0 +1,33 @@
+﻿@model SampleAspNet.ViewModels.ProductIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Products</h2>
+
+<a asp-area="" asp-controller="Product" asp-action="NewProduct">Add Product</a>
+
+<table class="table table-bordered table-hover">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Delete?</th>
+        </tr>
+        @foreach (Product product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Product", "Post"))
+                    {
+                        <input asp-for="ProductIdToDelete" class="control-label" type="hidden" value="@product.Id" />
+                        <input type="submit" value="Delete" class="btn btn-default" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
